@@ -3,6 +3,7 @@ package io.github.henriqueaguiiar.springBoot_project.domain.services.impl;
 import io.github.henriqueaguiiar.springBoot_project.domain.entities.User;
 import io.github.henriqueaguiiar.springBoot_project.domain.repository.UserRepository;
 import io.github.henriqueaguiiar.springBoot_project.domain.services.UserService;
+import io.github.henriqueaguiiar.springBoot_project.domain.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         Optional<User> obj = userRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     @Override
