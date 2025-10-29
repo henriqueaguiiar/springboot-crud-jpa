@@ -13,4 +13,7 @@ public interface UserService {
     User findById(Long id);
 
    User insert(User obj);
+
+   User update(Long id, User obj);
+
 }
