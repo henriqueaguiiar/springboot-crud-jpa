@@ -1,8 +1,10 @@
 package io.github.henriqueaguiiar.springBoot_project.configuration;
 
+import io.github.henriqueaguiiar.springBoot_project.domain.entities.Category;
 import io.github.henriqueaguiiar.springBoot_project.domain.entities.Order;
 import io.github.henriqueaguiiar.springBoot_project.domain.entities.User;
 import io.github.henriqueaguiiar.springBoot_project.domain.entities.enums.OrderStatus;
+import io.github.henriqueaguiiar.springBoot_project.domain.repository.CategoryRepository;
 import io.github.henriqueaguiiar.springBoot_project.domain.repository.OrderRepository;
 import io.github.henriqueaguiiar.springBoot_project.domain.repository.UserRepository;
 import lombok.extern.log4j.Log4j;
@@ -21,15 +23,22 @@ public class TestConfig implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public TestConfig(UserRepository userRepository, OrderRepository orderRepository) {
+    public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public void run(String[] args) throws Exception {
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
         User user1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
         User user2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 
@@ -37,6 +46,8 @@ public class TestConfig implements CommandLineRunner {
         Order order2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, user2);
         Order order3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"),OrderStatus.WAITING_PAYMENT, user1);
 
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+        log.info("Categories saved");
         userRepository.saveAll(Arrays.asList(user1, user2));
         orderRepository.saveAll(Arrays.asList(order1, order2, order3));
         log.info("Orders saved");
