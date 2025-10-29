@@ -1,14 +1,8 @@
 package io.github.henriqueaguiiar.springBoot_project.configuration;
 
-import io.github.henriqueaguiiar.springBoot_project.domain.entities.Category;
-import io.github.henriqueaguiiar.springBoot_project.domain.entities.Order;
-import io.github.henriqueaguiiar.springBoot_project.domain.entities.Product;
-import io.github.henriqueaguiiar.springBoot_project.domain.entities.User;
+import io.github.henriqueaguiiar.springBoot_project.domain.entities.*;
 import io.github.henriqueaguiiar.springBoot_project.domain.entities.enums.OrderStatus;
-import io.github.henriqueaguiiar.springBoot_project.domain.repository.CategoryRepository;
-import io.github.henriqueaguiiar.springBoot_project.domain.repository.OrderRepository;
-import io.github.henriqueaguiiar.springBoot_project.domain.repository.ProductRepository;
-import io.github.henriqueaguiiar.springBoot_project.domain.repository.UserRepository;
+import io.github.henriqueaguiiar.springBoot_project.domain.repository.*;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -27,13 +21,15 @@ public class TestConfig implements CommandLineRunner {
     private final OrderRepository orderRepository;
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Autowired
-    public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository, ProductRepository productRepository) {
+    public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository, ProductRepository productRepository, OrderItemRepository orderItemRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
         this.categoryRepository = categoryRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
@@ -49,13 +45,12 @@ public class TestConfig implements CommandLineRunner {
         Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
         Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
-        User user1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
-        User user2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
+        User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
+        User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 
-        Order order1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, user1);
-        Order order2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, user2);
-        Order order3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"),OrderStatus.WAITING_PAYMENT, user1);
-
+        Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, u1);
+        Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
+        Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1);
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         log.info("Categories saved");
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
@@ -71,11 +66,22 @@ public class TestConfig implements CommandLineRunner {
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
         log.info("Products-Categories relationships saved");
 
-        userRepository.saveAll(Arrays.asList(user1, user2));
+        userRepository.saveAll(Arrays.asList(u1, u2));
         log.info("Users saved");
-        orderRepository.saveAll(Arrays.asList(order1, order2, order3));
+        orderRepository.saveAll(Arrays.asList(o1, o2, o3));
         log.info("Orders saved");
         log.info("Test users saved to the database.");
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+        log.info("OrderItems saved");
+
+
     }
 
 }
