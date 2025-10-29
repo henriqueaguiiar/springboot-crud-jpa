@@ -1,10 +1,8 @@
-package io.github.henriqueaguiiar.springBoot_project.api.v1.resources.user;
+package io.github.henriqueaguiiar.springBoot_project.api.v1.resources.order;
 
 
 import io.github.henriqueaguiiar.springBoot_project.domain.entities.Order;
-import io.github.henriqueaguiiar.springBoot_project.domain.entities.User;
 import io.github.henriqueaguiiar.springBoot_project.domain.services.OrderService;
-import io.github.henriqueaguiiar.springBoot_project.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
