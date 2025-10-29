@@ -41,6 +41,12 @@ public class UserServiceImpl implements UserService {
         updateData(entity, obj);
         return userRepository.save(entity);
     }
+
+    @Override
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
+
     private void updateData(User entity, User obj) {
         entity.setName(obj.getName());
         entity.setEmail(obj.getEmail());
