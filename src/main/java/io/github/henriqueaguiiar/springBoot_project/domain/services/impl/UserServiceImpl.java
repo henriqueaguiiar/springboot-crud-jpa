@@ -5,6 +5,7 @@ import io.github.henriqueaguiiar.springBoot_project.domain.repository.UserReposi
 import io.github.henriqueaguiiar.springBoot_project.domain.services.UserService;
 import io.github.henriqueaguiiar.springBoot_project.domain.services.exceptions.DatabaseException;
 import io.github.henriqueaguiiar.springBoot_project.domain.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -41,9 +42,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(Long id, User obj) {
-        User entity = userRepository.getReferenceById(id);
-        updateData(entity, obj);
-        return userRepository.save(entity);
+        try{
+            User entity = userRepository.getReferenceById(id);
+            updateData(entity, obj);
+            return userRepository.save(entity);
+        }catch(EntityNotFoundException e){
+            throw new ResourceNotFoundException(id);
+        }
+
     }
 
     @Override
