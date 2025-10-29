@@ -2,7 +2,6 @@ package io.github.henriqueaguiiar.springBoot_project.configuration;
 
 import io.github.henriqueaguiiar.springBoot_project.domain.entities.User;
 import io.github.henriqueaguiiar.springBoot_project.domain.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
