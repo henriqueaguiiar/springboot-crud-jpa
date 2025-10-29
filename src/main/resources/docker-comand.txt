@@ -1,0 +1,2 @@
+
+sudo docker run --name springboot_crud -p 5432:5432 -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=springboot_database postgres:16.3

@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.util.Arrays;
 
 @Configuration
-@Profile(value = "test")
+@Profile(value = "dev")
 @Log4j
 public class TestConfig implements CommandLineRunner {
 
