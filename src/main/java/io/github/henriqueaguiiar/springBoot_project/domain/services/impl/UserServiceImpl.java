@@ -3,8 +3,11 @@ package io.github.henriqueaguiiar.springBoot_project.domain.services.impl;
 import io.github.henriqueaguiiar.springBoot_project.domain.entities.User;
 import io.github.henriqueaguiiar.springBoot_project.domain.repository.UserRepository;
 import io.github.henriqueaguiiar.springBoot_project.domain.services.UserService;
+import io.github.henriqueaguiiar.springBoot_project.domain.services.exceptions.DatabaseException;
 import io.github.henriqueaguiiar.springBoot_project.domain.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,7 +48,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        try{
+            userRepository.deleteById(id);
+        }catch(EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+
     }
 
     private void updateData(User entity, User obj) {
