@@ -1,6 +1,5 @@
 package io.github.henriqueaguiiar.springBoot_project.domain.entities;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,31 +8,37 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity
-@Table(name = "tb_category")
-public class Category implements Serializable {
-    public static long seialVersionUID = 1L;
+@Table(name = "tb_product")
+public class Product implements Serializable {
+    public static long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String description;
+    private Double price;
+    private String imgUrl;
     @Setter(AccessLevel.NONE)
-    private Set<Product> products = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
 
-
-    public Category(Long id, String name) {
+    public Product(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;
         this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(id, category.id);
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
     }
 
     @Override
