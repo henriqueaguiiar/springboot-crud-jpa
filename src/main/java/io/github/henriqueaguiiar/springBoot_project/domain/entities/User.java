@@ -1,9 +1,9 @@
 package io.github.henriqueaguiiar.springBoot_project.domain.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -24,6 +24,7 @@ public class User implements Serializable {
     private String password;
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<Order> orders  = new java.util.ArrayList<>();
 
     public User(Long id, String name, String email, String phone, String password) {
@@ -34,7 +35,7 @@ public class User implements Serializable {
         this.password = password;
         this.orders = new java.util.ArrayList<>();
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
