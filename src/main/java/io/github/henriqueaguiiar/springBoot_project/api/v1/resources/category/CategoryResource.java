@@ -2,9 +2,6 @@ package io.github.henriqueaguiiar.springBoot_project.api.v1.resources.category;
 
 
 import io.github.henriqueaguiiar.springBoot_project.domain.entities.Category;
-import io.github.henriqueaguiiar.springBoot_project.domain.entities.User;
-import io.github.henriqueaguiiar.springBoot_project.domain.services.CategoryService;
-import io.github.henriqueaguiiar.springBoot_project.domain.services.UserService;
 import io.github.henriqueaguiiar.springBoot_project.domain.services.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
